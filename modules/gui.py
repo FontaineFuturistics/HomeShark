@@ -1,7 +1,19 @@
-class GUI:
+import os
 
+USER_FOLDER = "./userFolder"
+
+class GUI:
     def __init__(self, modules: list, fp: str):
 
+        # Clear the userFolder
+        for filename in os.listdir(USER_FOLDER):
+            try:
+                os.remove(os.path.join(USER_FOLDER, filename))
+                print(f"Deleted outdated user file {filename}")
+            except Exception as e:
+                print(f"Error deleting {filename}: {e}")
+
+        # Init variables
         self.modules = modules
         self.fp = fp
 
@@ -31,13 +43,27 @@ class GUI:
 
             users[uip].append(connection)
 
-        # TODO initial setup
-        out.write("<!DOCTYPE html><html><head><title>HomeShark</title><meta charset=\"UTF-8\"><meta http-equiv=\"refresh\" content = \"5; URL=file:///home/kali/Documents/output.html\" /></head>") # Automatically refresh the page
+        # Set up of main page
+        out.write(
+            "<!DOCTYPE html> " +
+                "<head> "
+                    "<style>"+
+                        ".scrolls {overflow-x: scroll; overflow-y: hidden; white-space:nowrap}"+
+                        ".iframeDiv iframe{box-shadow: 1px 1px 10px #999; margin: 2px; max-height: 50px; cursor: pointer; display:inline-block; vertical-align:top}"+
+                    "</style>"+
+                "</head>"+
+                "<h1> This is main page text <h1>"+
+                "<div class='scrolls'>"
+                ) 
 
-        # Generate each column by user ip
+        
+        # Generate each page by user ip
         for uip in users:
-
+            
             # TODO Setup user
+            newFileLocation = "./userFolder/" + uip + ".html"
+            user_out = open(newFileLocation, "w")#Creates dedicated user page in userFolder
+            user_out.write("<!DOCTYPE html> <html> <h2> Connections for User: " + uip + "</h2>")
 
             # Get the connection list for this user
             conn_list = users[uip]
@@ -46,8 +72,22 @@ class GUI:
             for conn in conn_list:
 
                 # TODO: setup connection
-                out.write(str(conn))
+                user_out.write(str(conn))
+            
+            user_out.write("</html>")
+            user_out.close()
+            #Add this user to the main page
+            out.write("<iframe src='" + newFileLocation + "' height=550></iframe>")
 
-        # Finish the method
+        # Finish the page
+        out.write("</div> </html>")
         out.close()
         return
+
+
+# <script>setTimeout(() => {document.location.reload();}, 3000);</script>
+
+
+if __name__ == "__main__":
+
+    g = GUI([], "")
