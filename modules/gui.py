@@ -32,7 +32,7 @@ class GUI:
             users[uip].append(connection)
 
         # TODO initial setup
-        out.write("<!DOCTYPE html><html><meta http-equiv=\"refresh\" content = \"5; URL=file:///home/kali/Documents/output.html\" />") # Automatically refresh the page
+        out.write("<!DOCTYPE html><html><head><title>HomeShark</title><meta charset=\"UTF-8\"><meta http-equiv=\"refresh\" content = \"5; URL=file:///home/kali/Documents/output.html\" /></head>") # Automatically refresh the page
 
         # Generate each column by user ip
         for uip in users:
