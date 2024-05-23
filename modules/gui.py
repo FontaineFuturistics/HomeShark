@@ -5,7 +5,6 @@ class GUI:
         self.modules = modules
         self.fp = fp
 
-
         return
     
     def updateGUI(self) -> None:
@@ -33,7 +32,7 @@ class GUI:
             users[uip].append(connection)
 
         # TODO initial setup
-        out.write("<meta http-equiv=\"refresh\" content = \"5; URL=file:///home/kali/Documents/output.html\" />") # Automatically refresh the page
+        out.write("<!DOCTYPE html><html><meta http-equiv=\"refresh\" content = \"5; URL=file:///home/kali/Documents/output.html\" />") # Automatically refresh the page
 
         # Generate each column by user ip
         for uip in users:
