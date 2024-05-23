@@ -1,5 +1,6 @@
 import pyshark
 import modules.web_tracker as web_tracker
+import modules.app_tracker as app_tracker
 import modules.gui as gui
 
 # Remember to setup monitor mode
@@ -23,6 +24,7 @@ MAX_PACKET = 5_000
 
 # Initialize the modules
 modules = [web_tracker.Web_Tracker()]
+modules.append(app_tracker.App_Tracker(modules[0]))
 
 # Make gui
 gui_obj = gui.GUI(modules, "output.html")
@@ -44,7 +46,3 @@ for packet in capture.sniff_continuously():
 
     for module in modules:
         module.accept_packet(packet)
-
-# print module outputs
-for module in modules:
-    print(module)

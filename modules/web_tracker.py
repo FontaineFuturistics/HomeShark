@@ -21,10 +21,6 @@ class Web_Tracker:
                 connection.accept_packet(packet)
                 is_existing = True
                 return # A packet is only part of one ip
-            
-        # if it was, exit
-        if is_existing:
-            return
         
         # Check if it is dns for a new connection
         if "DNS" in packet and "resp_type" in packet.dns.field_names and (packet.dns.resp_type == "1" or packet.dns.resp_type == "5") and hasattr(packet.dns, "a"):
@@ -74,6 +70,17 @@ class Web_Tracker:
         # Return out of void
         return
 
+    # Checks if a connection exists for an ip, if so returns the connection, if not returns None
+    def has_connection_for(self, server_ip: str) -> conn.Connection:
+
+        for connection in self.connections:
+            if server_ip in connection.server_ips:
+                return connection
+        for connection in self.dead_connections:
+            if server_ip in connection.server_ips:
+                return connection
+        return None
+    
     def __str__(self) -> str:
 
         output = "Web Tracker Module:<br />"
