@@ -5,7 +5,10 @@ import modules.gui as gui
 
 # Remember to setup monitor mode
 # sudo airmon-ng stop wlan0
-# sudo airmon-ng start wlan0 6
+# sudo airmon-ng start wlan0
+
+# View the output:
+# file:///home/kali/Documents/output.html
 
 # Get the capture device we are using (Default to wlan0)
 capture_device = input("enter the device to capture on (-1 for default) ")

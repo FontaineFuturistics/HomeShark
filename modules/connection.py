@@ -1,4 +1,5 @@
 from math import floor
+from time import strftime, localtime
 import pyshark.packet.packet as pypacket
 
 class Connection:
@@ -50,9 +51,12 @@ class Connection:
     # Check if a packet should be considered a new connection for us
     def is_new_connection(self, packet: pypacket.Packet) -> bool:
 
-        # If the query name is the same, but the time is 5 minutes after our end time, return true
-        return packet.dns.qry_name in self.names and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= 300)
-    
+        # If this is a dns query, check if it has the same name as us
+        if "DNS" in packet:
+            return packet.dns.qry_name in self.names and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= 300)
+        else: # Otherwise just check the ip
+            return packet.ip.src in self.server_ips and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= 300)
+
     def __str__(self) -> str:
 
-        return f"{self.names}<br />-----Start Time: {self.start_time}<br />-----End Time: {self.end_time}<br />-----Connection Length (sec): {self.end_time - self.start_time}<br />-----Size Down: {self.volume}<br />-----Server Ips: {self.server_ips}<br />"
+        return f"{self.names}<br />-----Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})<br />-----End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})<br />-----Connection Length (sec): {self.end_time - self.start_time}<br />-----Size Down: {self.volume}<br />-----Server Ips: {self.server_ips}<br />"

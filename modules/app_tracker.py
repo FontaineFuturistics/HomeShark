@@ -43,7 +43,7 @@ class App_Tracker:
         if ("UDP" in packet and "DNS" not in packet and "SSDP" not in packet and "NBNS" not in packet 
             and "DHCP" not in packet and "SMB" not in packet and "MDNS" not in packet and "NTP" not in packet 
             and "DHCPV6" not in packet and "LMNR" not in packet and "QUIC" not in packet and "ICMPV6" not in packet 
-            and "ICMP" not in packet and "STUN" not in packet and packet.udp.port == "443"):
+            and "ICMP" not in packet and "STUN" not in packet and packet.udp.port != "443"):
 
             # If it is, grab server ip and check if there is web connection for this
             server_ip = packet.ip.src
