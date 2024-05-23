@@ -5,14 +5,6 @@ USER_FOLDER = "./userFolder"
 class GUI:
     def __init__(self, modules: list, fp: str):
 
-        # Clear the userFolder
-        for filename in os.listdir(USER_FOLDER):
-            try:
-                os.remove(os.path.join(USER_FOLDER, filename))
-                print(f"Deleted outdated user file {filename}")
-            except Exception as e:
-                print(f"Error deleting {filename}: {e}")
-
         # Init variables
         self.modules = modules
         self.fp = fp
@@ -44,26 +36,13 @@ class GUI:
             users[uip].append(connection)
 
         # Set up of main page
-        out.write(
-            "<!DOCTYPE html> " +
-                "<head> "
-                    "<style>"+
-                        ".scrolls {overflow-x: scroll; overflow-y: hidden; white-space:nowrap}"+
-                        ".iframeDiv iframe{box-shadow: 1px 1px 10px #999; margin: 2px; max-height: 50px; cursor: pointer; display:inline-block; vertical-align:top}"+
-                    "</style>"+
-                "</head>"+
-                "<h1> This is main page text <h1>"+
-                "<div class='scrolls'>"
-                ) 
+        out.write("<!DOCTYPE html><head><title>HomeShark</title><style>.scrolls {overflow-x: scroll;overflow-y: hidden;white-space: nowrap;display:flex}.iframeDiv, iframe {box-shadow: 1px 1px 10px #999;margin: 2px;max-height: 700px;height: 700;max-width: 450px;overflow-y: scroll;cursor: pointer;display: inline-block;vertical-align: top;padding: 10px 0px 0px 10px;}.tb {font-size: 12px;}</style></head><html><body><h1> This is main page text </h1><button style=\"display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background-color: #0074D9; color: #ffffff; cursor: pointer; transition: background-color 0.3s ease;\" onclick=\"window.location.reload();\">Refresh Page</button><div class='scrolls'>") 
 
         
         # Generate each page by user ip
         for uip in users:
-            
-            # TODO Setup user
-            newFileLocation = "./userFolder/" + uip + ".html"
-            user_out = open(newFileLocation, "w")#Creates dedicated user page in userFolder
-            user_out.write("<!DOCTYPE html> <html> <h2> Connections for User: " + uip + "</h2>")
+
+            user_entry = f"<div class='iframeDiv' ><h2>Connections for<br />User: {uip}</h2><p class=\"tb\">"
 
             # Get the connection list for this user
             conn_list = users[uip]
@@ -71,16 +50,17 @@ class GUI:
             # For each connection
             for conn in conn_list:
 
-                # TODO: setup connection
-                user_out.write(str(conn))
-            
-            user_out.write("</html>")
-            user_out.close()
-            #Add this user to the main page
-            out.write("<iframe src='" + newFileLocation + "' height=550></iframe>")
+                # write each connection
+                user_entry += str(conn)
+
+            # End the user entry
+            user_entry += "</p></div>"
+
+            # Write to output
+            out.write(user_entry)
 
         # Finish the page
-        out.write("</div> </html>")
+        out.write("</div></body></html>")
         out.close()
         return
 
