@@ -69,4 +69,4 @@ class Connection:
     
     def __str__(self) -> str:
 
-        return f"{self.names}<br />-----Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})<br />-----End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})<br />-----Connection Length (sec): {self.end_time - self.start_time}<br />-----Size Down (Approx.): {self.volume * 10 / 1024}MB<br />-----Server Ips: {self.server_ips}<br />-----User Ip: {self.user_ip}<br />"
+        return f"<div class='connectionDiv'><h4>{self.names}<h4><ul><li>Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})</li><li>End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})</li><li>Run Time (sec): {self.end_time - self.start_time}</li><li>Size Down: {self.volume}</li><li>Server Ips: {self.server_ips}</li></ul></div>"
