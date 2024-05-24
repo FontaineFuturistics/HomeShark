@@ -15,8 +15,6 @@ class App_Tracker:
 
     def accept_packet(self, packet: pypacket.Packet) -> None:
 
-        is_existing = False
-
         # Check if it is part of a connection
         for connection in self.connections: # NOTE this will consider any communication from a server, even that which is not UDP, as continuing a connection
             if connection.is_ours(packet):
@@ -35,7 +33,6 @@ class App_Tracker:
 
                 else: # If it isn't, accept the packet and return
                     connection.accept_packet(packet)
-                    is_existing = True
 
                 return # A packet is only part of one ip
         

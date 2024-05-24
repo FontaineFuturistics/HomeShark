@@ -20,6 +20,9 @@ class Request_Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         self.do_GET()
 
+    def log_message(self, format, *args) -> None:
+        return # Disables logging to clear the terminal
+
 def start_server(mon: thread_monitor.ThreadMonitor):
 
     # Make a server

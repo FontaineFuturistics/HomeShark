@@ -12,14 +12,11 @@ class Web_Tracker:
 
     def accept_packet(self, packet: pypacket.Packet) -> None:
 
-        is_existing = False
-
         # Check if it is part of a connection
-        for connection in self.connections:
+        for connection in self.connections: # TODO killing connections decreases the number we need to check
 
             if connection.is_ours(packet):
                 connection.accept_packet(packet)
-                is_existing = True
                 return # A packet is only part of one ip
         
         # Check if it is dns for a new connection
@@ -80,6 +77,17 @@ class Web_Tracker:
             if server_ip in connection.server_ips:
                 return connection
         return None
+    
+    def find_dead_connections(self, current_time: float) -> None:
+
+        for connection in self.connections:
+
+            if connection.is_dead(current_time):
+
+                print("killed a connection")
+
+                self.dead_connections.append(connection)
+                self.connections.remove(connection)
     
     def __str__(self) -> str:
 

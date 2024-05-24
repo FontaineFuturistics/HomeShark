@@ -2,6 +2,8 @@ from math import floor
 from time import strftime, localtime
 import pyshark.packet.packet as pypacket
 
+CONNECTION_TIMEOUT = 300 # Number of seconds it takes a connection to timeout
+
 class Connection:
 
     def __init__(self, name: str, user_ip: str, server_ips: list[str], start_time: float):
@@ -53,10 +55,18 @@ class Connection:
 
         # If this is a dns query, check if it has the same name as us
         if "DNS" in packet:
-            return packet.dns.qry_name in self.names and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= 300)
+            return packet.dns.qry_name in self.names and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= CONNECTION_TIMEOUT)
         else: # Otherwise just check the ip
-            return packet.ip.src in self.server_ips and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= 300)
+            return packet.ip.src in self.server_ips and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= CONNECTION_TIMEOUT)
 
+    def is_dead(self, current_time: float) -> bool:
+
+        return (floor(float(current_time) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= CONNECTION_TIMEOUT)
+    
+    def getConnLen(self) -> str:
+
+        return strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))
+    
     def __str__(self) -> str:
 
-        return f"{self.names}<br />-----Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})<br />-----End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})<br />-----Connection Length (sec): {self.end_time - self.start_time}<br />-----Size Down: {self.volume}<br />-----Server Ips: {self.server_ips}<br />----User Ip: {self.user_ip}<br />"
+        return f"{self.names}<br />-----Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})<br />-----End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})<br />-----Connection Length (sec): {self.end_time - self.start_time}<br />-----Size Down (Approx.): {self.volume * 10 / 1024}MB<br />-----Server Ips: {self.server_ips}<br />-----User Ip: {self.user_ip}<br />"

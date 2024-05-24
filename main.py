@@ -1,7 +1,8 @@
-import threading
 import modules.homeshark as homeshark
 import modules.server as server
 import modules.thread_monitor as thread_monitor
+import multiprocessing
+from time import sleep
 
 #Remember to setup monitor mode
 # sudo airmon-ng stop wlan0
@@ -16,17 +17,30 @@ if __name__ =="__main__":
 
     mon = thread_monitor.ThreadMonitor()
 
-    t1 = threading.Thread(target=homeshark.start_capture, args=(mon,))
-    t2 = threading.Thread(target=server.start_server, args=(mon,))
- 
-    t1.start()
-    t2.start()
+    # Get the capture device we are using (Default to wlan0)
+    capture_device = input("enter the device to capture on (-1 for default) ")
 
-    input("press enter to kill")
+    if (capture_device == "-1"):
+        capture_device = "wlan0"
+
+    # Make the homeshark object
+    hs = homeshark.HomeShark(mon)
+
+    p1 = multiprocessing.Process(target=hs.start_capture, args=(capture_device,))
+    p2 = multiprocessing.Process(target=server.start_server, args=(mon,))
+ 
+    p1.start()
+    p2.start()
+
+    input("Press enter at any time to end capture\n")
     mon.kill()
     print("killing")
 
-    t1.join()
+    # Give processes a few second to close gracefully
+    sleep(5)
+    
+    # Kill them
+    p1.terminate()
     print("Homeshark killed")
-    t2.join()
+    p2.terminate()
     print("Server killed")

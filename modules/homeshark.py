@@ -1,50 +1,61 @@
 import pyshark
+import pyshark.capture
 import modules.web_tracker as web_tracker
 import modules.app_tracker as app_tracker
 import modules.gui as gui
 import modules.thread_monitor as thread_monitor
+import pyshark.packet.packet as pypacket
+from pyshark.capture.capture import StopCapture
 
-def start_capture(mon: thread_monitor.ThreadMonitor):
-    # Get the capture device we are using (Default to wlan0)
-    capture_device = input("enter the device to capture on (-1 for default) ")
+class HomeShark:
 
-    if (capture_device == "-1"):
-        capture_device = "wlan0"
+    def __init__(self, mon: thread_monitor.ThreadMonitor):
 
-    # Create a new live capture
-    capture = pyshark.LiveCapture(interface=capture_device, display_filter="ip.dst == 192.168.1.0/16", # Ignoring all traffic that isn't inbound ip traffic
-                                decryption_key="0a211ea90a276821c4abc90cb9b60bebc934685a90efd62a044dfa6c8fecf66f", # linksys psk
-                                encryption_type="wpa-psk")
+        # Initialize the modules
+        self.modules = [web_tracker.Web_Tracker()]
+        self.modules.append(app_tracker.App_Tracker(self.modules[0]))
 
-    # Determine how many packets to capture
-    current_packet = 1
-    MAX_PACKET = 5_000
+        self.mon = mon
+        self.current_packet = 1
+        self.gui_obj = gui.GUI(self.modules, "output.html")
+        self.capture = None
 
-    # Initialize the modules
-    modules = [web_tracker.Web_Tracker()]
-    modules.append(app_tracker.App_Tracker(modules[0]))
+    # Start capturing packets
+    def start_capture(self, capture_device: str):
 
-    # Make gui
-    gui_obj = gui.GUI(modules, "output.html")
+        # Create a new live capture
+        self.capture = pyshark.LiveCapture(interface=capture_device, display_filter="ip.dst == 192.168.1.0/16 && (dns || frame.number % 10 == 1)", # Ignoring all traffic that isn't inbound ip traffic NOTE: Might drop eapol, not sure if its an issue
+                                    decryption_key="0a211ea90a276821c4abc90cb9b60bebc934685a90efd62a044dfa6c8fecf66f", # linksys psk
+                                    encryption_type="wpa-psk", 
+                                    )
+        
+        # Process packets (stopping capture is handled by process_packet
+        self.capture.apply_on_packets(self.process_packet)
+
+        # Time to quit
+        return
+    
 
     # Start capturing
-    #for packet in capture.sniff_continuously(packet_count=MAX_PACKET):
-    for packet in capture.sniff_continuously():
+    def process_packet(self, packet: pypacket.Packet):
 
         # If we need to exit, exit
-        if mon.must_exit == True:
-            return
+        if self.mon.must_exit == True:
+            raise StopCapture()
 
         # Print how far into the capture we are
-        if current_packet % 100 == 0:
+        if self.current_packet % 100 == 0:
 
             # Print status to the console
-            print(f"\r{current_packet:05}/{MAX_PACKET:05}")
+            print(f"\r{self.current_packet:05}", end="")
 
             # Update the output file
-            gui_obj.updateGUI()
+            self.gui_obj.updateGUI()
 
-        current_packet += 1
+            # Tell web_tracker to kill dead packets
+            self.modules[0].find_dead_connections(float(packet.sniff_timestamp))
 
-        for module in modules:
+        self.current_packet += 1
+
+        for module in self.modules:
             module.accept_packet(packet)
