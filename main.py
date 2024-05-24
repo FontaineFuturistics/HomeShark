@@ -18,7 +18,7 @@ if __name__ =="__main__":
     mon = thread_monitor.ThreadMonitor()
 
     # Get the capture device we are using (Default to wlan0)
-    capture_device = input("enter the device to capture on (-1 for default) ")
+    capture_device = input("Enter the device to capture on (-1 for default) ")
 
     if (capture_device == "-1"):
         capture_device = "wlan0"
@@ -34,7 +34,7 @@ if __name__ =="__main__":
 
     input("Press enter at any time to end capture\n")
     mon.kill()
-    print("killing")
+    print("Killing")
 
     # Give processes a few second to close gracefully
     sleep(5)

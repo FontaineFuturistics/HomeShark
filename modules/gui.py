@@ -36,13 +36,13 @@ class GUI:
             users[uip].append(connection)
 
         # Set up of main page
-        out.write("<!DOCTYPE html><head><title>HomeShark</title><style>body{background-color: #e1e1e1;}.scrolls {overflow-x: scroll;overflow-y: hidden;white-space: nowrap;display:flex}.userDiv{box-shadow: 1px 1px 10px #999;margin: 2px;max-height: 550px;height: 550;max-width: 450px;width: 450;overflow-y: scroll;cursor: pointer;display: inline-block;vertical-align: top;padding: 10px 1px 1px 15px;}.connectionDiv{box-shadow: 1px 1px 10px #999;margin: 10px;max-height: 100%;height:fit-content;width:90%;cursor: pointer;vertical-align: middle;padding: 1px 5px 5px 15px;background-color: #e1e1e1;overflow-x: scroll;-ms-overflow-style: none;scrollbar-width: none;}.tb {font-size: 12px;}h1{font-family: Impact, fantasy;}</style></head><html><body><h1> Home Shark </h1><button style='display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; font-size: 16px; font-family:'Times New Roman', Times, serif; border: none; border-radius: 5px; background-color: #0074D9; color: #ffffff; cursor: pointer; transition: background-color 0.3s ease;\" onclick=\"window.location.reload();\">Refresh</button><hr /><div class='scrolls'><div>") 
+        out.write("<!DOCTYPE html><head><title>HomeShark</title><style>body{background-color: #e1e1e1;}.scrolls {overflow-x: scroll;overflow-y: hidden;white-space: nowrap;display:flex}.userDiv{box-shadow: 1px 1px 10px #999;margin: 2px;max-height: 550px;height: 550;max-width: 450px;width: 450;overflow-y: scroll;cursor: pointer;display: inline-block;vertical-align: top;padding: 10px 1px 1px 15px;background-color: #b3d9ff;}.connectionDiv{box-shadow: 1px 1px 10px #999;margin: 10px;max-height: 100%;height:fit-content;width:90%;cursor: pointer;vertical-align: middle;padding: 1px 5px 5px 15px;background-color: #e1e1e1;overflow-x: scroll;-ms-overflow-style: none;scrollbar-width: none;border-radius: 5px;}.tb {font-size: 12px;}</style></head><html><body><h1> Home Shark </h1><button style=\"display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background-color: #0074d9; color: #ffffff;\" onclick=\"window.location.reload();\">Refresh</button><hr /><div class='scrolls'><div>") 
 
         
         # Generate each page by user ip
         for uip in users:
 
-            user_entry = f"<div class='userDiv' ><h2>Connections for User: {uip}</h2>"
+            user_entry = f"<div class='userDiv' ><h4>Connections for User: {uip}</h4>"
 
             # Get the connection list for this user
             conn_list = users[uip]
