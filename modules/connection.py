@@ -7,7 +7,7 @@ CONNECTION_TIMEOUT = 300 # Number of seconds it takes a connection to timeout
 
 class Connection:
 
-    def __init__(self, name: str, user_ip: str, server_ips: list[str], start_time: float):
+    def __init__(self, name: str, user_ip: str, server_ips: list, start_time: float):
 
         # Setup variables
         self.names = [name]
@@ -34,7 +34,7 @@ class Connection:
         # Increase packet count
         self.packet_count += 1
 
-    def expand_server_ips(self, new_ips: list[str]) -> None:
+    def expand_server_ips(self, new_ips: list) -> None:
 
         # Add new ips to the server ips list
         for ip in new_ips:
