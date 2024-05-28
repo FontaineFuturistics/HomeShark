@@ -24,6 +24,7 @@ class App_Tracker:
                 if connection.is_new_connection(packet):
 
                     # Kill the existing connection
+                    connection.is_alive = False
                     self.dead_connections.append(connection)
                     self.connections.remove(connection)
 
