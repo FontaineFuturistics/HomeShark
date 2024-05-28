@@ -1,6 +1,7 @@
 import pyshark.packet.packet as pypacket
 import modules.connection as conn
 import modules.web_tracker as web_tracker
+from modules.utils import get_dst, get_src
 
 class App_Tracker:
 
@@ -27,7 +28,7 @@ class App_Tracker:
                     self.connections.remove(connection)
 
                     # Make a new connection
-                    new_conn = conn.Connection(f"Application Connection {self.conn_num}", packet.ip.dst, [packet.ip.src], float(packet.sniff_timestamp))
+                    new_conn = conn.Connection(f"Application Connection {self.conn_num}", get_dst(packet), [get_src(packet)], float(packet.sniff_timestamp))
                     self.connections.append(new_conn)
                     self.conn_num += 1
 
@@ -43,7 +44,7 @@ class App_Tracker:
             and "ICMP" not in packet and "STUN" not in packet and packet.udp.port != "443"):
 
             # If it is, grab server ip and check if there is web connection for this
-            server_ip = packet.ip.src
+            server_ip = get_src(packet)
             web_conn = self.wbtrkr.has_connection_for(server_ip)
 
             # If there is setup this connection as complementary to a web connection
@@ -53,7 +54,7 @@ class App_Tracker:
                 self.connections.append(new_conn)
             else: # Otherwise just make a new connection
                 # Make a new connection
-                new_conn = conn.Connection(f"Application Connection {self.conn_num}", packet.ip.dst, [packet.ip.src], float(packet.sniff_timestamp))
+                new_conn = conn.Connection(f"Application Connection {self.conn_num}", get_dst(packet), [get_src(packet)], float(packet.sniff_timestamp))
                 self.connections.append(new_conn)
 
             # Increase conn_num

@@ -1,6 +1,7 @@
 from math import floor
 from time import strftime, localtime
 import pyshark.packet.packet as pypacket
+from modules.utils import get_dst, get_src
 
 CONNECTION_TIMEOUT = 300 # Number of seconds it takes a connection to timeout
 
@@ -47,8 +48,7 @@ class Connection:
 
     # Return whether or not a packet is part of our connection
     def is_ours(self, packet: pypacket.Packet) -> bool:
-
-        return (packet.ip.src in self.server_ips)
+        return (get_src(packet) in self.server_ips)
     
     # Check if a packet should be considered a new connection for us
     def is_new_connection(self, packet: pypacket.Packet) -> bool:
@@ -57,7 +57,7 @@ class Connection:
         if "DNS" in packet:
             return packet.dns.qry_name in self.names and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= CONNECTION_TIMEOUT)
         else: # Otherwise just check the ip
-            return packet.ip.src in self.server_ips and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= CONNECTION_TIMEOUT)
+            return get_src(packet) in self.server_ips and ((floor(float(packet.sniff_timestamp)) - (self.end_time if self.end_time > self.start_time else self.start_time)) >= CONNECTION_TIMEOUT)
 
     def is_dead(self, current_time: float) -> bool:
 

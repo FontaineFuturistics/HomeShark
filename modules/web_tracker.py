@@ -1,5 +1,6 @@
 import pyshark.packet.packet as pypacket
 import modules.connection as conn
+from modules.utils import get_dst, get_src
 
 class Web_Tracker:
 
@@ -55,13 +56,13 @@ class Web_Tracker:
                             self.connections.remove(connection)
 
                             # Make a new connection
-                            new_connection = conn.Connection(packet.dns.qry_name, packet.ip.dst, all_ips, float(packet.sniff_timestamp))
+                            new_connection = conn.Connection(packet.dns.qry_name, get_dst(packet), all_ips, float(packet.sniff_timestamp))
                             self.connections.append(new_connection)
 
                         return # connections cannot be merged
 
             # Else make a new connection
-            new_connection = conn.Connection(packet.dns.qry_name, packet.ip.dst, all_ips, float(packet.sniff_timestamp))
+            new_connection = conn.Connection(packet.dns.qry_name, get_dst(packet), all_ips, float(packet.sniff_timestamp))
             self.connections.append(new_connection)
 
         # Return out of void
