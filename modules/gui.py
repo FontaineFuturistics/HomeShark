@@ -17,11 +17,14 @@ class GUI:
 
         # Get all connections
         all_connections = []
+        dead_connections = []
         for module in self.modules:
             for connection in module.connections:
                 all_connections.append(connection)
             for connection in module.dead_connections:
-                all_connections.append(connection)
+                dead_connections.append(connection)
+        for connection in dead_connections:
+            all_connections.append(connection)
 
         # Sort connections by user_ip
         users = {}
