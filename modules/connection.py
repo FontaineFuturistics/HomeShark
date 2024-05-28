@@ -23,6 +23,7 @@ class Connection:
         # Set start time
         self.start_time = floor(start_time)
 
+    # DEPRECATED: use handle_packet
     def accept_packet(self, packet: pypacket.Packet) -> None:
 
         # update end time
@@ -45,11 +46,57 @@ class Connection:
 
         # Add the new name if necessary
         if new_name not in self.names:
-            self.names.append(new_name)
+            self.names.append(new_name) 
 
-    # Return whether or not a packet is part of our connection
-    def is_ours(self, packet: pypacket.Packet) -> bool:
-        return (get_src(packet) in self.server_ips)
+    def handle_packet(self, packet: pypacket.Packet) -> bool:
+
+        # Whether the packet was ours
+        ours = False
+
+        # Get the src or dst
+        packet_src = get_src(packet)
+        packet_dst = get_dst(packet)
+
+        # Is this packet going to our user? if not it can't be relevant to us
+        if (packet_dst == self.user_ip):
+        
+            # Check if it came from one of our servers to our user
+            if (packet_src in self.server_ips):
+                ours = True
+
+            # check if it is a DNS query that expands our server_ips
+            if "DNS" in packet and "resp_type" in packet.dns.field_names and (packet.dns.resp_type == "1" or packet.dns.resp_type == "5") and hasattr(packet.dns, "a"): # this is a DNS response
+
+                # Get all ips from the response
+                all_ips = []
+                for field in packet.dns.a.all_fields:
+                    all_ips.append(field.get_default_value())
+                
+                # If they overlap us at all, this is part of us
+                for ip in all_ips:
+                    if ip in self.server_ips:
+                        self.expand_server_ips(all_ips)
+                        self.expand_name(packet.dns.qry_name)
+                        ours = True
+                        break
+
+                # if it is a dns query that is one of our names, it is part of us
+                if packet.dns.qry_name in self.names:
+                    self.expand_server_ips(all_ips)
+                    ours = True
+
+        # If it ended up being ours, add it to our data
+        if ours:
+            # update end time
+            self.end_time = floor(float(packet.sniff_timestamp))
+
+            # probably increase length correctly TODO: Check this
+            self.volume += len(packet)
+
+            # Increase packet count
+            self.packet_count += 1
+
+        return ours
     
     # Check if a packet should be considered a new connection for us
     def is_new_connection(self, packet: pypacket.Packet) -> bool:

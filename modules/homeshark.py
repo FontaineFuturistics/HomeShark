@@ -45,7 +45,7 @@ class HomeShark:
             raise StopCapture()
 
         # Print how far into the capture we are
-        if self.current_packet % 100 == 0:
+        if self.current_packet % 100 == 1:
 
             # Print status to the console
             print(f"\r{self.current_packet:05}", end="")
@@ -59,4 +59,5 @@ class HomeShark:
         self.current_packet += 1
 
         for module in self.modules:
-            module.accept_packet(packet)
+            if module.accept_packet(packet):
+                break
