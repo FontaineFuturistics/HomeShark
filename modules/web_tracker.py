@@ -85,8 +85,7 @@ class Web_Tracker:
 
             if connection.is_dead(current_time):
 
-                print("killed a connection")
-
+                connection.is_alive = False                
                 self.dead_connections.append(connection)
                 self.connections.remove(connection)
     

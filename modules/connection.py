@@ -18,6 +18,7 @@ class Connection:
         self.end_time = 0
         self.volume = 0
         self.packet_count = 0
+        self.is_alive = True
         
         # Set start time
         self.start_time = floor(start_time)
