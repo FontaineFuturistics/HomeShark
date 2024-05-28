@@ -6,6 +6,7 @@ import modules.gui as gui
 import modules.thread_monitor as thread_monitor
 import pyshark.packet.packet as pypacket
 from pyshark.capture.capture import StopCapture
+from modules.utils import get_dst, get_src
 
 class HomeShark:
 
@@ -40,6 +41,8 @@ class HomeShark:
     # Start capturing
     def process_packet(self, packet: pypacket.Packet):
 
+        print(get_dst(packet))
+
         # If we need to exit, exit
         if self.mon.must_exit == True:
             raise StopCapture()
@@ -48,7 +51,7 @@ class HomeShark:
         if self.current_packet % 100 == 1:
 
             # Print status to the console
-            print(f"\r{self.current_packet:05}", end="")
+            print(f"\r{self.current_packet - 1:05}", end="")
 
             # Update the output file
             self.gui_obj.updateGUI()

@@ -24,7 +24,7 @@ class Web_Tracker:
                 break # If the connection accepted it, stop processing
         else:
 
-            if "DNS" in packet:
+            if "DNS" in packet and hasattr(packet.dns, "a"):
                 # Else make a new connection
                 all_ips = []
                 for field in packet.dns.a.all_fields:
