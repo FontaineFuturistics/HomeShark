@@ -87,6 +87,7 @@ class Connection:
 
         # If it ended up being ours, add it to our data
         if ours:
+            
             # update end time
             self.end_time = floor(float(packet.sniff_timestamp))
 

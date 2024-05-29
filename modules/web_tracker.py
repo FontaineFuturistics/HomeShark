@@ -22,7 +22,8 @@ class Web_Tracker:
             if connection.handle_packet(packet):
                 accepted = True
                 break # If the connection accepted it, stop processing
-        else:
+
+        else: # If we didn't accept the packet, see if it is a new DNS connection
 
             if "DNS" in packet and hasattr(packet.dns, "a"):
                 # Else make a new connection
