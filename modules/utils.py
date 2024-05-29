@@ -28,3 +28,12 @@ def epoch_time_diff(epoch_start_time: int, epoch_end_time: int) -> str:
     seconds = max((epoch_end_time - epoch_start_time) % 60, 0)
 
     return f"{minutes}:{seconds:02}"
+
+def list_join(strlist: list) -> str:
+
+    output = ""
+
+    for thing in list:
+        output += thing
+
+    return output

@@ -2,8 +2,10 @@ from math import floor
 from time import strftime, localtime
 import pyshark.packet.packet as pypacket
 from modules.utils import get_dst, get_src, epoch_time_diff
+from pathlib import Path
 
 CONNECTION_TIMEOUT = 300 # Number of seconds it takes a connection to timeout
+CONNECTION_DIV_TEMPLATE = "./html_templates/connection_div.html"
 
 class Connection:
 
@@ -20,6 +22,7 @@ class Connection:
         self.volume = 0
         self.packet_count = 0
         self.is_alive = True
+        self.connection_div = Path(CONNECTION_DIV_TEMPLATE).read_text()
         
         # Set start time
         self.start_time = floor(start_time)
@@ -118,6 +121,14 @@ class Connection:
         return strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))
     
     def __str__(self) -> str:
-        if self.is_alive == True:
-            return f"<div class='connectionDiv'><h4>{self.names}</h4><ul><li>Start Time: {strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))}</li><li>End Time: {strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))}</li><li>Run Time (sec): {epoch_time_diff(self.start_time, self.end_time)}</li><li>Size Down: {(self.volume * self.discard_base) // 1_047_552}MB<B</li><li>Server Ips: {self.server_ips}</li></ul></div>"
-        return f"<div class='connectionDiv'><h4>{self.names} (Dead Connection)</h4><ul><li>Start Time: {strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))}</li><li>End Time: {strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))}</li><li>Run Time: {epoch_time_diff(self.start_time, self.end_time)}</li><li>Size Down: {(self.volume * self.discard_base) // 1_047_552}MB</li><li>Server Ips: {self.server_ips}</li></ul></div>"
+        dead_str = ""
+        if self.is_alive == False:
+            dead_str = "(Dead Connection)"
+        return self.connection_div.format(conn_name_list=self.names,
+                                          dead=dead_str, 
+                                          start_time=strftime('%H:%M:%S %m-%d', localtime(self.start_time)), # old: '%Y-%m-%d %H:%M:%S'
+                                          end_time=strftime('%H:%M:%S %m-%d', localtime(self.end_time)), 
+                                          run_time=epoch_time_diff(self.start_time, self.end_time), 
+                                          size_down=(self.volume * self.discard_base) // 1_047_552, 
+                                          server_ips=self.server_ips)
+        

@@ -1,6 +1,8 @@
-import os
+from pathlib import Path
 
-USER_FOLDER = "./userFolder"
+MAIN_PAGE_TEMPLATE = "./html_templates/main.html"
+USER_DIV_TEMPLATE = "./html_templates/user_div.html"
+STYLE_TAGS = "./html_templates/style_tags.css"
 
 class GUI:
     def __init__(self, modules: list, fp: str):
@@ -9,11 +11,19 @@ class GUI:
         self.modules = modules
         self.fp = fp
 
+        # Get templates
+        self.main_page = Path(MAIN_PAGE_TEMPLATE).read_text()
+        self.user_div = Path(USER_DIV_TEMPLATE).read_text()
+        self.style_tags = Path(STYLE_TAGS).read_text()
+
         return
     
     def updateGUI(self) -> None:
 
-        out = open(self.fp, "w")
+        # temp:
+        self.main_page = Path(MAIN_PAGE_TEMPLATE).read_text()
+        self.user_div = Path(USER_DIV_TEMPLATE).read_text()
+        self.style_tags = Path(STYLE_TAGS).read_text()
 
         # Get all connections
         all_connections = []
@@ -38,14 +48,14 @@ class GUI:
 
             users[uip].append(connection)
 
-        # Set up of main page
-        out.write("<!DOCTYPE html><head><title>HomeShark</title><style>body{background-color: #e1e1e1;}.scrolls {overflow-x: scroll;overflow-y: hidden;white-space: nowrap;display:flex}.userDiv{box-shadow: 1px 1px 10px #999;margin: 2px;max-height: 550px;height: 550;max-width: 450px;width: 450;overflow-y: scroll;cursor: pointer;display: inline-block;vertical-align: top;padding: 10px 1px 1px 15px;background-color: #b3d9ff;}.connectionDiv{box-shadow: 1px 1px 10px #999;margin: 10px;max-height: 100%;height:fit-content;width:90%;cursor: pointer;vertical-align: middle;padding: 1px 5px 5px 15px;background-color: #e1e1e1;overflow-x: scroll;-ms-overflow-style: none;scrollbar-width: none;border-radius: 5px;}.tb {font-size: 12px;}</style></head><html><body><h1> Home Shark </h1><button style=\"display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background-color: #0074d9; color: #ffffff;\" onclick=\"window.location.reload();\">Refresh</button><hr /><div class='scrolls'><div>") 
-
+        # variable for user list
+        user_list = ""
         
         # Generate each page by user ip
         for uip in users:
 
-            user_entry = f"<div class='userDiv' ><h4>Connections for User: {uip}</h4>"
+            # variable for the connections for this user
+            conn_divs = ""
 
             # Get the connection list for this user
             conn_list = users[uip]
@@ -54,16 +64,15 @@ class GUI:
             for conn in conn_list:
 
                 # write each connection
-                user_entry += str(conn)
+                conn_divs += str(conn)
 
-            # End the user entry
-            user_entry += "</div>"
-
-            # Write to output
-            out.write(user_entry)
+            # Add them to the user list
+            user_list += self.user_div.format(user_name=uip, connection_div_list=conn_divs)
 
         # Finish the page
-        out.write("</div></div></body></html>")
+        new_page = self.main_page.format(styles=self.style_tags, user_div_list=user_list)
+        out = open(self.fp, "w")
+        out.write(new_page)
         out.close()
         return
 
