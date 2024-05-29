@@ -59,10 +59,6 @@ class Connection:
 
         # Is this packet going to our user? if not it can't be relevant to us
         if (packet_dst == self.user_ip):
-        
-            # Check if it came from one of our servers to our user
-            if (packet_src in self.server_ips):
-                ours = True
 
             # check if it is a DNS query that expands our server_ips
             if "DNS" in packet and "resp_type" in packet.dns.field_names and (packet.dns.resp_type == "1" or packet.dns.resp_type == "5") and hasattr(packet.dns, "a"): # this is a DNS response
@@ -84,10 +80,14 @@ class Connection:
                 if packet.dns.qry_name in self.names:
                     self.expand_server_ips(all_ips)
                     ours = True
+        
+            # Check if it came from one of our servers to our user
+            if (packet_src in self.server_ips):
+                ours = True
 
         # If it ended up being ours, add it to our data
         if ours:
-            
+
             # update end time
             self.end_time = floor(float(packet.sniff_timestamp))
 
