@@ -23,8 +23,11 @@ if __name__ =="__main__":
     if (capture_device == "-1"):
         capture_device = "wlan0"
 
+    # Get how many packets to discard
+    discard_base = int(input("For optimization, most non-DNS packets must be discarded, please enter a number to server as the discard base (A reasonably minimum is 10, with higher recommended for weaker systems): "))
+
     # Make the homeshark object
-    hs = homeshark.HomeShark(mon)
+    hs = homeshark.HomeShark(mon, discard_base)
 
     p1 = multiprocessing.Process(target=hs.start_capture, args=(capture_device,))
     p2 = multiprocessing.Process(target=server.start_server, args=(mon,))

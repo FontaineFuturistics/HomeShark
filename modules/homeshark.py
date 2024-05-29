@@ -10,22 +10,23 @@ from modules.utils import get_dst, get_src
 
 class HomeShark:
 
-    def __init__(self, mon: thread_monitor.ThreadMonitor):
+    def __init__(self, mon: thread_monitor.ThreadMonitor, discard_base: int):
 
         # Initialize the modules
-        self.modules = [web_tracker.Web_Tracker()]
-        self.modules.append(app_tracker.App_Tracker(self.modules[0]))
+        self.modules = [web_tracker.Web_Tracker(discard_base)]
+        self.modules.append(app_tracker.App_Tracker(self.modules[0], discard_base))
 
         self.mon = mon
         self.current_packet = 1
         self.gui_obj = gui.GUI(self.modules, "output.html")
         self.capture = None
+        self.discard_base = discard_base
 
     # Start capturing packets
     def start_capture(self, capture_device: str):
 
         # Create a new live capture
-        self.capture = pyshark.LiveCapture(interface=capture_device, display_filter="ip.dst == 192.168.0.0/16 && (dns || frame.number % 10 == 1)", # Ignoring all traffic that isn't inbound ip traffic
+        self.capture = pyshark.LiveCapture(interface=capture_device, display_filter=f"ip.dst == 192.168.0.0/16 && (dns || frame.number % {self.discard_base} == 1)", # Ignoring all traffic that isn't inbound ip traffic
                                     #decryption_key="0a211ea90a276821c4abc90cb9b60bebc934685a90efd62a044dfa6c8fecf66f", # linksys psk
                                     #decryption_key="7bc9e287677511f0635b904643665f9fba4cd4f31995ef9671280ddae3efa6be", # nexus5g psk
                                     decryption_key="f1f93d02795d8db06ad2052852ae7f98ec769e4d3f0714888dc7a05a510bfee0", # nexus2g psk

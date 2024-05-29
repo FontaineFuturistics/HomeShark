@@ -7,12 +7,13 @@ CONNECTION_TIMEOUT = 300 # Number of seconds it takes a connection to timeout
 
 class Connection:
 
-    def __init__(self, name: str, user_ip: str, server_ips: list, start_time: float):
+    def __init__(self, name: str, user_ip: str, server_ips: list, start_time: float, discard_base: int):
 
         # Setup variables
         self.names = [name]
         self.user_ip = user_ip
         self.server_ips = server_ips
+        self.discard_base = discard_base
 
         # Constant starting variables
         self.end_time = 0
@@ -118,5 +119,5 @@ class Connection:
     
     def __str__(self) -> str:
         if self.is_alive == True:
-            return f"<div class='connectionDiv'><h4>{self.names}</h4><ul><li>Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})</li><li>End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})</li><li>Run Time (sec): {self.end_time - self.start_time}</li><li>Size Down: {self.volume}</li><li>Server Ips: {self.server_ips}</li></ul></div>"
-        return f"<div class='connectionDiv'><h4>{self.names} (Dead Connection)</h4><ul><li>Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})</li><li>End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})</li><li>Run Time (sec): {self.end_time - self.start_time}</li><li>Size Down: {self.volume}</li><li>Server Ips: {self.server_ips}</li></ul></div>"
+            return f"<div class='connectionDiv'><h4>{self.names}</h4><ul><li>Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})</li><li>End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})</li><li>Run Time (sec): {self.end_time - self.start_time}</li><li>Size Down: {(self.volume * self.discard_base) // 1_047_552}MB<B</li><li>Server Ips: {self.server_ips}</li></ul></div>"
+        return f"<div class='connectionDiv'><h4>{self.names} (Dead Connection)</h4><ul><li>Start Time: {self.start_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.start_time))})</li><li>End Time: {self.end_time} ({strftime('%Y-%m-%d %H:%M:%S', localtime(self.end_time))})</li><li>Run Time (sec): {self.end_time - self.start_time}</li><li>Size Down: {(self.volume * self.discard_base) // 1_047_552}MB</li><li>Server Ips: {self.server_ips}</li></ul></div>"

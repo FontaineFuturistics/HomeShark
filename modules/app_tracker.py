@@ -5,12 +5,13 @@ from modules.utils import get_dst, get_src
 
 class App_Tracker:
 
-    def __init__(self, wbtrkr: web_tracker.Web_Tracker):
+    def __init__(self, wbtrkr: web_tracker.Web_Tracker, discard_base: int):
 
         self.connections = [] # Living connections
         self.dead_connections = [] # Dead connections
         self.wbtrkr = wbtrkr # The web tracker module
         self.conn_num = 1 # The current connection number we are on
+        self.discard_base = discard_base
 
         return
 
@@ -32,7 +33,7 @@ class App_Tracker:
                 and "ICMP" not in packet and "STUN" not in packet and packet.udp.port != "443"):
 
                 # Make a new connection
-                new_conn = conn.Connection(f"Application Connection {self.conn_num}", get_dst(packet), [get_src(packet)], float(packet.sniff_timestamp))
+                new_conn = conn.Connection(f"Application Connection {self.conn_num}", get_dst(packet), [get_src(packet)], float(packet.sniff_timestamp), self.discard_base)
                 self.connections.append(new_conn)
 
                 # Increase conn_num for application naming

@@ -4,10 +4,12 @@ from modules.utils import get_dst, get_src
 
 class Web_Tracker:
 
-    def __init__(self):
+    def __init__(self, discard_base: int):
 
         self.connections = []
         self.dead_connections = []
+
+        self.discard_base = discard_base
 
         return
 
@@ -30,7 +32,7 @@ class Web_Tracker:
                 all_ips = []
                 for field in packet.dns.a.all_fields:
                     all_ips.append(field.get_default_value())
-                new_connection = conn.Connection(packet.dns.qry_name, get_dst(packet), all_ips, float(packet.sniff_timestamp))
+                new_connection = conn.Connection(packet.dns.qry_name, get_dst(packet), all_ips, float(packet.sniff_timestamp), self.discard_base)
                 self.connections.append(new_connection)
                 accepted = True
 
