@@ -82,7 +82,7 @@ class Connection:
                     ours = True
         
             # Check if it came from one of our servers to our user
-            if (packet_src in self.server_ips):
+            elif (packet_src in self.server_ips): # elif prevents DNS from being consumed by a connection
                 ours = True
 
         # If it ended up being ours, add it to our data
