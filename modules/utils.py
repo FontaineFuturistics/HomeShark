@@ -21,3 +21,10 @@ def get_dst(packet: pypacket.Packet) -> str:
         except:
             print("ip_dst access failure")
             return ""
+        
+def epoch_time_diff(epoch_start_time: int, epoch_end_time: int) -> str:
+
+    minutes = max((epoch_end_time - epoch_start_time) // 60, 0)
+    seconds = max((epoch_end_time - epoch_start_time) % 60, 0)
+
+    return f"{minutes}:{seconds:02}"
