@@ -4,7 +4,9 @@
     <link rel="icon" href="https://raw.githubusercontent.com/FontaineFuturistics/HomeShark/main/HomeShark.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Righteous&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Righteous&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
     <title>HomeShark</title>
     <style>
         * {
@@ -42,8 +44,6 @@ h4 {
 button {
 
     float: right;
-    margin-left: -50%;
-    margin-top: -2em;
     display: inline-flex; 
     align-items: center; 
     justify-content: center; 
@@ -129,23 +129,47 @@ button {
     padding-bottom: 5px;
 
 }
+
+.topBar {
+
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.clock {
+
+
+    font-family: 'Major Mono Display';
+    font-size: 56px;
+
+}
+
+.even {
+
+    width: 200px;
+
+}
     </style>
-    
+
 </head>
 <html>
 
 <body>
-    <div>
-
-        <div style="display: flex; align-items: center;">
-            <img src="https://raw.githubusercontent.com/FontaineFuturistics/HomeShark/main/HomeShark.png" alt="HOMESHARK" style="width: 56px; height: 56px; margin-right: 10px;">
-            <span style="font-family:'Righteous';font-size: 56px;">Hom<span class="blu">e</span>Shark</span>
+    <div class="topBar">
+        <div class="even">
+            <div style="display: flex; align-items: center;">
+                <img src="https://raw.githubusercontent.com/FontaineFuturistics/HomeShark/main/HomeShark.png"
+                    alt="HOMESHARK" style="width: 56px; height: 56px; margin-right: 10px;">
+                <span style="font-family:'Righteous';font-size: 56px;">Hom<span class="blu">e</span>Shark</span>
+            </div>
         </div>
-        <button onclick="window.location.reload();">Refresh</button>
-        
-        
+        <span class="clock">13:14:52</span>
+        <div class="even"><button onclick="window.location.reload();">Refresh</button></div>
+
+
     </div>
-    
+
 
     <div class="vs"></div>
     <hr />
@@ -153,179 +177,267 @@ button {
         <div>
             <div class='userDiv'>
     <h4>Connections for User: 192.168.51.126</h4>
-    <span class="ud">Size Down: 6MB</span>
+    <span class="ud">Size Down: 2MB</span>
     <div class="vs"></div>
     <div class="vertScroll">
     <div class='connectionDiv'>
-    <h4 >['functional.events.data.microsoft.com'] </h4>
-    <ul>
-        <li>start time: 11:21:19 05-30</li>
-        <li>end time: 19:00:00 12-31</li>
-        <li>run time: 0:41</li>
-        <li>size down: 0mb</li>
-        <li>server ips: ['13.69.116.107']</li>
-    </ul>
-</div><div class='connectionDiv'>
     <h4 >['flow.logitech.io'] </h4>
     <ul>
-        <li>start time: 11:21:19 05-30</li>
-        <li>end time: 11:21:19 05-30</li>
+        <li>start time: 13:10:43 05-30</li>
+        <li>end time: 13:10:43 05-30</li>
         <li>run time: 0:00</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['54.209.53.61', '3.85.178.133', '3.95.92.137', '54.224.245.203', '54.221.203.80', '44.195.101.132', '54.209.9.147', '44.194.212.146']</li>
-    </ul>
-</div><div class='connectionDiv'>
-    <h4 >['www.msftconnecttest.com'] </h4>
-    <ul>
-        <li>start time: 11:21:20 05-30</li>
-        <li>end time: 11:21:25 05-30</li>
-        <li>run time: 0:05</li>
-        <li>size down: 5mb</li>
-        <li>server ips: ['23.215.0.135', '23.215.0.134']</li>
+        <li>server ips: ['54.210.154.81', '3.90.117.155', '44.205.203.232', '3.95.78.107', '54.197.167.227', '3.93.223.133', '35.174.206.93', '54.175.104.88']</li>
     </ul>
 </div><div class='connectionDiv'>
     <h4 >['client.wns.windows.com'] </h4>
     <ul>
-        <li>start time: 11:21:20 05-30</li>
-        <li>end time: 11:21:23 05-30</li>
-        <li>run time: 0:03</li>
+        <li>start time: 13:10:44 05-30</li>
+        <li>end time: 13:12:48 05-30</li>
+        <li>run time: 2:04</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['52.159.126.152']</li>
+        <li>server ips: ['20.25.241.18']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['functional.events.data.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:10:45 05-30</li>
+        <li>end time: 13:12:18 05-30</li>
+        <li>run time: 1:33</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['51.116.253.170', '52.168.112.66']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['outlook.office.com'] </h4>
+    <ul>
+        <li>start time: 13:10:45 05-30</li>
+        <li>end time: 13:14:51 05-30</li>
+        <li>run time: 4:06</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['52.96.88.18', '52.96.88.34', '52.96.87.194', '52.96.40.242', '52.96.109.242', '52.96.69.2', '52.96.88.114', '52.96.15.178', '40.97.188.2', '52.96.58.98', '52.96.111.82', '52.96.181.34', '52.96.35.178', '52.96.111.2', '52.96.64.130']</li>
     </ul>
 </div><div class='connectionDiv'>
     <h4 >['licensing.mp.microsoft.com'] </h4>
     <ul>
-        <li>start time: 11:21:20 05-30</li>
-        <li>end time: 11:21:20 05-30</li>
+        <li>start time: 13:10:46 05-30</li>
+        <li>end time: 13:10:46 05-30</li>
         <li>run time: 0:00</li>
         <li>size down: 0mb</li>
         <li>server ips: ['52.254.115.56']</li>
     </ul>
 </div><div class='connectionDiv'>
+    <h4 >['self.events.data.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:10:50 05-30</li>
+        <li>end time: 19:00:00 12-31</li>
+        <li>run time: 0:10</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['52.182.143.213']</li>
+    </ul>
+</div><div class='connectionDiv'>
     <h4 >['copilot.microsoft.com', 'th.bing.com'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:25 05-30</li>
-        <li>run time: 0:04</li>
-        <li>size down: 1mb</li>
-        <li>server ips: ['23.48.203.79', '23.48.203.82', '23.48.203.77', '23.48.203.70', '23.48.203.76', '23.48.203.72', '23.48.203.74', '23.48.203.73', '23.48.203.78', '23.48.203.71']</li>
+        <li>start time: 13:10:50 05-30</li>
+        <li>end time: 13:11:28 05-30</li>
+        <li>run time: 0:38</li>
+        <li>size down: 2mb</li>
+        <li>server ips: ['23.48.203.77', '23.48.203.82', '23.48.203.79', '23.48.203.71', '23.48.203.76', '23.48.203.73', '23.48.203.83', '23.48.203.74', '23.48.203.81']</li>
     </ul>
 </div><div class='connectionDiv'>
-    <h4 >['browser.events.data.msn.com'] </h4>
+    <h4 >['srtb.msn.com', 'ntp.msn.com', 'windows.msn.com', 'www.msn.com'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:24 05-30</li>
-        <li>run time: 0:03</li>
-        <li>size down: 0mb</li>
-        <li>server ips: ['20.189.173.24', '20.189.173.18']</li>
-    </ul>
-</div><div class='connectionDiv'>
-    <h4 >['srtb.msn.com', 'ntp.msn.com'] </h4>
-    <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:25 05-30</li>
-        <li>run time: 0:04</li>
+        <li>start time: 13:10:50 05-30</li>
+        <li>end time: 13:14:51 05-30</li>
+        <li>run time: 4:01</li>
         <li>size down: 0mb</li>
         <li>server ips: ['204.79.197.203']</li>
     </ul>
 </div><div class='connectionDiv'>
-    <h4 >['c.msn.com'] </h4>
+    <h4 >['browser.events.data.msn.com'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 19:00:00 12-31</li>
-        <li>run time: 0:39</li>
+        <li>start time: 13:10:50 05-30</li>
+        <li>end time: 13:10:53 05-30</li>
+        <li>run time: 0:03</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['20.110.205.119']</li>
+        <li>server ips: ['52.168.112.66']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['sb.scorecardresearch.com'] </h4>
+    <ul>
+        <li>start time: 13:10:50 05-30</li>
+        <li>end time: 19:00:00 12-31</li>
+        <li>run time: 0:10</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['18.154.227.100', '18.154.227.51', '18.154.227.32', '18.154.227.84']</li>
     </ul>
 </div><div class='connectionDiv'>
     <h4 >['assets.msn.com'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:24 05-30</li>
-        <li>run time: 0:03</li>
+        <li>start time: 13:10:50 05-30</li>
+        <li>end time: 13:14:52 05-30</li>
+        <li>run time: 4:02</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['23.48.104.202', '23.48.104.206']</li>
+        <li>server ips: ['23.48.203.196', '23.48.203.209', '23.48.203.208', '23.48.203.205', '23.48.203.206', '23.48.203.207', '23.48.203.210', '23.48.203.211', '23.48.203.202', '23.48.203.197', '23.48.203.201', '23.48.203.200', '23.48.104.202', '23.48.104.206']</li>
     </ul>
 </div><div class='connectionDiv'>
     <h4 >['www.bing.com'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:24 05-30</li>
-        <li>run time: 0:03</li>
+        <li>start time: 13:10:50 05-30</li>
+        <li>end time: 13:11:17 05-30</li>
+        <li>run time: 0:27</li>
         <li>size down: 0mb</li>
         <li>server ips: ['204.79.197.200', '13.107.21.200']</li>
     </ul>
 </div><div class='connectionDiv'>
+    <h4 >['img-s-msn-com.akamaized.net'] </h4>
+    <ul>
+        <li>start time: 13:10:51 05-30</li>
+        <li>end time: 13:14:52 05-30</li>
+        <li>run time: 4:01</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['23.215.0.133', '23.215.0.139']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['rtb-us-east.linkedin.com'] </h4>
+    <ul>
+        <li>start time: 13:10:51 05-30</li>
+        <li>end time: 13:10:51 05-30</li>
+        <li>run time: 0:00</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['144.2.12.31']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['edge.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:10:57 05-30</li>
+        <li>end time: 13:13:29 05-30</li>
+        <li>run time: 2:32</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['204.79.197.239', '13.107.21.239']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['dns.msftncsi.com'] </h4>
+    <ul>
+        <li>start time: 13:11:10 05-30</li>
+        <li>end time: 19:00:00 12-31</li>
+        <li>run time: 0:50</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['131.107.255.255']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['browser.events.data.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:11:24 05-30</li>
+        <li>end time: 13:14:24 05-30</li>
+        <li>run time: 3:00</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['52.168.117.171', '104.208.16.89', '20.42.65.91', '20.42.65.84']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['server.events.data.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:13:55 05-30</li>
+        <li>end time: 19:00:00 12-31</li>
+        <li>run time: 0:05</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['20.42.65.89']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['v10.events.data.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:14:03 05-30</li>
+        <li>end time: 13:14:04 05-30</li>
+        <li>run time: 0:01</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['20.189.173.1']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['officeclient.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:14:03 05-30</li>
+        <li>end time: 13:14:04 05-30</li>
+        <li>run time: 0:01</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['52.109.20.38']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['mobile.events.data.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:14:03 05-30</li>
+        <li>end time: 13:14:09 05-30</li>
+        <li>run time: 0:06</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['104.46.162.225', '20.189.173.14']</li>
+    </ul>
+</div><div class='connectionDiv'>
+    <h4 >['v20.events.data.microsoft.com'] </h4>
+    <ul>
+        <li>start time: 13:14:03 05-30</li>
+        <li>end time: 13:14:04 05-30</li>
+        <li>run time: 0:01</li>
+        <li>size down: 0mb</li>
+        <li>server ips: ['104.208.16.92']</li>
+    </ul>
+</div><div class='connectionDiv'>
     <h4 >['roaming.officeapps.live.com'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:24 05-30</li>
-        <li>run time: 0:03</li>
+        <li>start time: 13:14:05 05-30</li>
+        <li>end time: 13:14:05 05-30</li>
+        <li>run time: 0:00</li>
         <li>size down: 0mb</li>
         <li>server ips: ['52.109.16.112']</li>
     </ul>
 </div><div class='connectionDiv'>
     <h4 >['nleditor.osi.office.net'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:24 05-30</li>
-        <li>run time: 0:03</li>
+        <li>start time: 13:14:06 05-30</li>
+        <li>end time: 13:14:35 05-30</li>
+        <li>run time: 0:29</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['52.111.230.27', '52.111.230.24', '52.111.230.26', '52.111.230.25']</li>
+        <li>server ips: ['52.111.230.27', '52.111.230.26', '52.111.230.24', '52.111.230.25']</li>
     </ul>
 </div><div class='connectionDiv'>
     <h4 >['login.live.com', 'login.microsoftonline.com'] </h4>
     <ul>
-        <li>start time: 11:21:21 05-30</li>
-        <li>end time: 11:21:24 05-30</li>
-        <li>run time: 0:03</li>
+        <li>start time: 13:14:06 05-30</li>
+        <li>end time: 13:14:52 05-30</li>
+        <li>run time: 0:46</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['40.126.24.81', '20.190.152.22', '40.126.24.147', '20.190.152.20', '40.126.24.148', '40.126.24.83', '20.190.152.21', '40.126.24.84', '40.126.24.146', '40.126.24.82', '40.126.24.149']</li>
+        <li>server ips: ['20.190.152.20', '40.126.24.84', '20.190.152.19', '40.126.24.146', '40.126.24.147', '40.126.24.81', '40.126.24.148', '20.190.152.21', '20.190.152.22', '40.126.24.149', '40.126.24.82', '40.126.24.83']</li>
     </ul>
 </div><div class='connectionDiv'>
-    <h4 >['rtb-us-east.linkedin.com'] </h4>
+    <h4 >['config.edge.skype.com'] </h4>
     <ul>
-        <li>start time: 11:21:24 05-30</li>
+        <li>start time: 13:14:15 05-30</li>
         <li>end time: 19:00:00 12-31</li>
-        <li>run time: 0:36</li>
+        <li>run time: 0:45</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['144.2.12.31']</li>
+        <li>server ips: ['13.107.42.16']</li>
     </ul>
 </div><div class='connectionDiv'>
-    <h4 >['img-s-msn-com.akamaized.net'] </h4>
+    <h4 >['graph.microsoft.com'] </h4>
     <ul>
-        <li>start time: 11:21:24 05-30</li>
-        <li>end time: 11:21:25 05-30</li>
-        <li>run time: 0:01</li>
+        <li>start time: 13:14:52 05-30</li>
+        <li>end time: 13:14:52 05-30</li>
+        <li>run time: 0:00</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['23.215.0.139', '23.215.0.133']</li>
+        <li>server ips: ['20.190.151.37', '40.126.23.38', '20.190.151.100', '40.126.23.162', '20.190.151.38', '40.126.23.98', '40.126.23.97', '40.126.23.163']</li>
     </ul>
-</div><div class='connectionDiv'>
-    <h4 >['outlook.office.com'] </h4>
+</div>
+    </div>
+</div><div class='userDiv'>
+    <h4>Connections for User: 192.168.51.255</h4>
+    <span class="ud">Size Down: 0MB</span>
+    <div class="vs"></div>
+    <div class="vertScroll">
+    <div class='connectionDiv'>
+    <h4 >['Application Connection 1'] </h4>
     <ul>
-        <li>start time: 11:21:24 05-30</li>
+        <li>start time: 13:10:50 05-30</li>
         <li>end time: 19:00:00 12-31</li>
-        <li>run time: 0:36</li>
+        <li>run time: 0:10</li>
         <li>size down: 0mb</li>
-        <li>server ips: ['52.96.9.2', '52.96.87.210', '52.96.88.114', '52.96.109.130', '52.96.109.162', '52.96.109.194', '52.96.111.18', '52.96.111.66']</li>
-    </ul>
-</div><div class='connectionDiv'>
-    <h4 >['prod-eastus.access-point.cloudmessaging.edge.microsoft.com'] </h4>
-    <ul>
-        <li>start time: 11:21:24 05-30</li>
-        <li>end time: 19:00:00 12-31</li>
-        <li>run time: 0:36</li>
-        <li>size down: 0mb</li>
-        <li>server ips: ['20.127.250.238']</li>
-    </ul>
-</div><div class='connectionDiv'>
-    <h4 >['browser.events.data.microsoft.com'] </h4>
-    <ul>
-        <li>start time: 11:21:24 05-30</li>
-        <li>end time: 19:00:00 12-31</li>
-        <li>run time: 0:36</li>
-        <li>size down: 0mb</li>
-        <li>server ips: ['20.189.173.26']</li>
+        <li>server ips: ['192.168.51.126']</li>
     </ul>
 </div>
     </div>

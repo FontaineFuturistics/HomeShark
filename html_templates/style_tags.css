@@ -33,8 +33,6 @@ h4 {
 button {
 
     float: right;
-    margin-left: -50%;
-    margin-top: -2em;
     display: inline-flex; 
     align-items: center; 
     justify-content: center; 
@@ -118,5 +116,26 @@ button {
     font-size: 20px;
     margin-bottom: 5px;
     padding-bottom: 5px;
+
+}
+
+.topBar {
+
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.clock {
+
+
+    font-family: 'Major Mono Display';
+    font-size: 56px;
+
+}
+
+.even {
+
+    width: 200px;
 
 }

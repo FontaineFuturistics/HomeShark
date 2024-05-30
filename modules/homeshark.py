@@ -6,7 +6,7 @@ import modules.gui as gui
 import modules.thread_monitor as thread_monitor
 import pyshark.packet.packet as pypacket
 from pyshark.capture.capture import StopCapture
-from modules.utils import get_dst, get_src
+from math import floor
 
 class HomeShark:
 
@@ -41,6 +41,9 @@ class HomeShark:
 
     # Start capturing
     def process_packet(self, packet: pypacket.Packet):
+
+        # Set time in gui object
+        self.gui_obj.time = floor(float(packet.sniff_timestamp))
 
         # If we need to exit, exit
         if self.mon.must_exit == True:

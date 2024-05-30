@@ -1,4 +1,5 @@
 from pathlib import Path
+from time import strftime, localtime
 
 MAIN_PAGE_TEMPLATE = "./html_templates/main.html"
 USER_DIV_TEMPLATE = "./html_templates/user_div.html"
@@ -10,6 +11,7 @@ class GUI:
         # Init variables
         self.modules = modules
         self.fp = fp
+        self.time = 0
 
         # Get templates
         self.main_page = Path(MAIN_PAGE_TEMPLATE).read_text()
@@ -70,7 +72,7 @@ class GUI:
             user_list += self.user_div.format(user_name=uip, connection_div_list=conn_divs, user_data=size[uip])
 
         # Finish the page
-        new_page = self.main_page.format(styles=self.style_tags, user_div_list=user_list)
+        new_page = self.main_page.format(styles=self.style_tags, user_div_list=user_list, time=strftime('%H:%M:%S', localtime(self.time)))
         out = open(self.fp, "w")
         out.write(new_page)
         out.close()
