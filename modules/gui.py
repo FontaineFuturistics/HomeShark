@@ -20,11 +20,6 @@ class GUI:
     
     def updateGUI(self) -> None:
 
-        # temp:
-        self.main_page = Path(MAIN_PAGE_TEMPLATE).read_text()
-        self.user_div = Path(USER_DIV_TEMPLATE).read_text()
-        self.style_tags = Path(STYLE_TAGS).read_text()
-
         # Get all connections
         all_connections = []
         dead_connections = []
