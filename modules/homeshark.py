@@ -31,7 +31,8 @@ class HomeShark:
                                     #decryption_key="7bc9e287677511f0635b904643665f9fba4cd4f31995ef9671280ddae3efa6be", # nexus5g psk
                                     decryption_key="f1f93d02795d8db06ad2052852ae7f98ec769e4d3f0714888dc7a05a510bfee0", # nexus2g psk
                                     encryption_type="wpa-psk",
-                                    )
+                                    ) # NOTE: This is a memory leak, tshark will eventually run out of ram and crash without reporting it to pyshark
+                                      #       a potential fix would be to delete all .pcapng files in /tmp/ on a regular basis to prevent the leak
         
         # Process packets (stopping capture is handled by process_packet
         self.capture.apply_on_packets(self.process_packet)
