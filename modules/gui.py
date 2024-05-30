@@ -1,5 +1,6 @@
 from pathlib import Path
 from time import strftime, localtime
+from modules.utils import byte_str
 
 MAIN_PAGE_TEMPLATE = "./html_templates/main.html"
 USER_DIV_TEMPLATE = "./html_templates/user_div.html"
@@ -48,7 +49,7 @@ class GUI:
                 size[uip] = 0
 
             users[uip].append(connection)
-            size[uip] += (connection.volume * connection.discard_base) // 1_047_552
+            size[uip] += (connection.volume * connection.discard_base)
 
         # variable for user list
         user_list = ""
@@ -69,7 +70,7 @@ class GUI:
                 conn_divs += str(conn)
 
             # Add them to the user list
-            user_list += self.user_div.format(user_name=uip, connection_div_list=conn_divs, user_data=size[uip])
+            user_list += self.user_div.format(user_name=uip, connection_div_list=conn_divs, user_data=byte_str(size[uip]))
 
         # Finish the page
         new_page = self.main_page.format(styles=self.style_tags, user_div_list=user_list, time=strftime('%H:%M:%S', localtime(self.time)))

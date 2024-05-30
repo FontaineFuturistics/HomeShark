@@ -1,7 +1,7 @@
 from math import floor
 from time import strftime, localtime
 import pyshark.packet.packet as pypacket
-from modules.utils import get_dst, get_src, epoch_time_diff
+from modules.utils import get_dst, get_src, epoch_time_diff, byte_str
 from pathlib import Path
 
 CONNECTION_TIMEOUT = 300 # Number of seconds it takes a connection to timeout
@@ -129,6 +129,6 @@ class Connection:
                                           start_time=strftime('%H:%M:%S %m-%d', localtime(self.start_time)), # old: '%Y-%m-%d %H:%M:%S'
                                           end_time=strftime('%H:%M:%S %m-%d', localtime(self.end_time)), 
                                           run_time=epoch_time_diff(self.start_time, self.end_time), 
-                                          size_down=(self.volume * self.discard_base) // 1_047_552, 
+                                          size_down=byte_str(self.volume * self.discard_base).lower(), 
                                           server_ips=self.server_ips)
         

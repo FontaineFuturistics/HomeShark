@@ -37,3 +37,22 @@ def list_join(strlist: list) -> str:
         output += thing
 
     return output
+
+def byte_str(byts: int) -> str:
+
+    if byts < 2048:
+        return str(byts) + "B"
+    
+    # Make kb
+    kbyts = byts // 1024
+    if kbyts < 2048:
+        return str(kbyts) + "KB"
+    
+    # Make MB
+    mbyts = kbyts // 1024
+    if mbyts < 2048:
+        return str(mbyts) + "MB"
+    
+    # Make GB
+    gbyts = mbyts // 1024
+    return str(gbyts) + "GB"
