@@ -29,6 +29,23 @@ h4 {
 
 }
 
+button {
+
+    float: right;
+    margin-left: -50%;
+    margin-top: -2em;
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 10px 20px; 
+    font-size: 36px; 
+    border: none; 
+    border-radius: 5px; 
+    background-color: #3a8ecf; 
+    color: #ffffff;
+
+}
+
 .scrolls {
     overflow-x: scroll;
     overflow-y: hidden;
@@ -43,6 +60,7 @@ h4 {
     height: 480;
     max-width: 450px;
     width: 450;
+    scrollbar-color: white #3a8ecf;
 }
 
 .userDiv {
@@ -57,7 +75,7 @@ h4 {
     display: inline-block;
     vertical-align: top;
     padding: 10px 1px 1px 15px;
-    background-color: #b3d9ff;
+    background-color: #3a8ecf;
 }
 
 .connectionDiv {
@@ -83,5 +101,13 @@ h4 {
 .vs {
 
     height:20px
+
+}
+
+.blu {
+
+    color: #0b7cd3;
+    font-family:'Righteous';
+    font-size: 56px;
 
 }
