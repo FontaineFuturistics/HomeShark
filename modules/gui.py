@@ -34,14 +34,19 @@ class GUI:
         # Sort connections by user_ip
         users = {}
 
+        # sort total connection size similarly
+        size = {}
+
         for connection in all_connections:
 
             uip = connection.user_ip
 
             if not uip in users:
                 users[uip] = []
+                size[uip] = 0
 
             users[uip].append(connection)
+            size[uip] += (connection.volume * connection.discard_base) // 1_047_552
 
         # variable for user list
         user_list = ""
@@ -62,7 +67,7 @@ class GUI:
                 conn_divs += str(conn)
 
             # Add them to the user list
-            user_list += self.user_div.format(user_name=uip, connection_div_list=conn_divs)
+            user_list += self.user_div.format(user_name=uip, connection_div_list=conn_divs, user_data=size[uip])
 
         # Finish the page
         new_page = self.main_page.format(styles=self.style_tags, user_div_list=user_list)
