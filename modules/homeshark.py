@@ -10,7 +10,7 @@ from math import floor
 
 class HomeShark:
 
-    def __init__(self, mon: thread_monitor.ThreadMonitor, discard_base: int):
+    def __init__(self, mon: thread_monitor.ThreadMonitor, discard_base: int, key: str):
 
         # Initialize the modules
         self.modules = [web_tracker.Web_Tracker(discard_base)]
@@ -21,6 +21,7 @@ class HomeShark:
         self.gui_obj = gui.GUI(self.modules, "output.html")
         self.capture = None
         self.discard_base = discard_base
+        self.key = key
 
     # Start capturing packets
     def start_capture(self, capture_device: str):
@@ -29,8 +30,10 @@ class HomeShark:
         self.capture = pyshark.LiveCapture(interface=capture_device, display_filter=f"ip.dst == 192.168.0.0/16 && (dns || frame.number % {self.discard_base} == 1)", # Ignoring all traffic that isn't inbound ip traffic
                                     #decryption_key="0a211ea90a276821c4abc90cb9b60bebc934685a90efd62a044dfa6c8fecf66f", # linksys psk
                                     #decryption_key="7bc9e287677511f0635b904643665f9fba4cd4f31995ef9671280ddae3efa6be", # nexus5g psk
-                                    decryption_key="f1f93d02795d8db06ad2052852ae7f98ec769e4d3f0714888dc7a05a510bfee0", # nexus2g psk
-                                    encryption_type="wpa-psk",
+                                    #decryption_key="f1f93d02795d8db06ad2052852ae7f98ec769e4d3f0714888dc7a05a510bfee0", # nexus2g psk
+                                    decryption_key=self.key,
+                                    #encryption_type="wpa-psk", # For hex format key
+                                    encryption_type="wpa-pwd",
                                     ) # NOTE: This is a memory leak, tshark will eventually run out of ram and crash without reporting it to pyshark
                                       #       a potential fix would be to delete all .pcapng files in /tmp/ on a regular basis to prevent the leak
         
