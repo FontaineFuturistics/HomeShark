@@ -18,14 +18,14 @@ class Connection:
         self.discard_base = discard_base
 
         # Constant starting variables
-        self.end_time = 0
         self.volume = 0
         self.packet_count = 0
         self.is_alive = True
         self.connection_div = Path(CONNECTION_DIV_TEMPLATE).read_text()
         
-        # Set start time
+        # Set start and end time
         self.start_time = floor(start_time)
+        self.end_time = floor(start_time)
 
     # DEPRECATED: use handle_packet
     def accept_packet(self, packet: pypacket.Packet) -> None:
