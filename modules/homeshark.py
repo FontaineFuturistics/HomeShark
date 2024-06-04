@@ -26,16 +26,25 @@ class HomeShark:
     # Start capturing packets
     def start_capture(self, capture_device: str):
 
-        # Create a new live capture
-        self.capture = pyshark.LiveCapture(interface=capture_device, display_filter=f"ip.dst == 192.168.0.0/16 && (dns || frame.number % {self.discard_base} == 1)", # Ignoring all traffic that isn't inbound ip traffic
-                                    #decryption_key="0a211ea90a276821c4abc90cb9b60bebc934685a90efd62a044dfa6c8fecf66f", # linksys psk
-                                    #decryption_key="7bc9e287677511f0635b904643665f9fba4cd4f31995ef9671280ddae3efa6be", # nexus5g psk
-                                    #decryption_key="f1f93d02795d8db06ad2052852ae7f98ec769e4d3f0714888dc7a05a510bfee0", # nexus2g psk
-                                    decryption_key=self.key,
-                                    #encryption_type="wpa-psk", # For hex format key
-                                    encryption_type="wpa-pwd",
-                                    ) # NOTE: This is a memory leak, tshark will eventually run out of ram and crash without reporting it to pyshark
-                                      #       a potential fix would be to delete all .pcapng files in /tmp/ on a regular basis to prevent the leak
+        if self.key =="": # If we don't have a key, don't use it
+
+            # Create a new live capture
+            self.capture = pyshark.LiveCapture(interface=capture_device, display_filter=f"ip.dst == 192.168.0.0/16 && (dns || frame.number % {self.discard_base} == 1)", # Ignoring all traffic that isn't inbound ip traffic
+                                        ) # NOTE: This is a memory leak, tshark will eventually run out of ram and crash without reporting it to pyshark
+                                        #       a potential fix would be to delete all .pcapng files in /tmp/ on a regular basis to prevent the leak
+
+        else:
+
+            # Create a new live capture
+            self.capture = pyshark.LiveCapture(interface=capture_device, display_filter=f"ip.dst == 192.168.0.0/16 && (dns || frame.number % {self.discard_base} == 1)", # Ignoring all traffic that isn't inbound ip traffic
+                                        #decryption_key="0a211ea90a276821c4abc90cb9b60bebc934685a90efd62a044dfa6c8fecf66f", # linksys psk
+                                        #decryption_key="7bc9e287677511f0635b904643665f9fba4cd4f31995ef9671280ddae3efa6be", # nexus5g psk
+                                        #decryption_key="f1f93d02795d8db06ad2052852ae7f98ec769e4d3f0714888dc7a05a510bfee0", # nexus2g psk
+                                        decryption_key=self.key,
+                                        #encryption_type="wpa-psk", # For hex format key
+                                        encryption_type="wpa-pwd",
+                                        ) # NOTE: This is a memory leak, tshark will eventually run out of ram and crash without reporting it to pyshark
+                                        #       a potential fix would be to delete all .pcapng files in /tmp/ on a regular basis to prevent the leak
         
         # Process packets (stopping capture is handled by process_packet
         self.capture.apply_on_packets(self.process_packet)

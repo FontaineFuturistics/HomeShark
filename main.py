@@ -23,7 +23,9 @@ if __name__ =="__main__":
     if (capture_device == "-1"):
         capture_device = "wlan0"
 
-    key = input("Please enter the network password: ") + ":" + input("Please enter the network SSID: ")
+    key = ""
+    if input("is this a promiscuous mode capture? (y/n): ") == "y":
+        key = input("Please enter the network password: ") + ":" + input("Please enter the network SSID: ")
 
     # Get how many packets to discard
     discard_base = int(input("For optimization, most non-DNS packets must be discarded, please enter a number to server as the discard base (A reasonably minimum is 10, with higher recommended for weaker systems): "))
@@ -37,7 +39,7 @@ if __name__ =="__main__":
     p1.start()
     p2.start()
 
-    input("Press enter at any time to end capture\n")
+    input("Press enter at any time to end capture...\n")
     mon.kill()
     print("Killing")
 
